@@ -58,9 +58,11 @@ prompt_template_no_rag = PromptTemplate(config, system_prompt=system_prompt_no_r
 if st.button("Generate Responses"):
     with st.spinner("Retrieving and Generating..."):
         retrieved_docs = retriever.search(query,num=topk)
-
+        retrieved_docs = retrieved_docs[0]
+        print(retrieved_docs)
         st.subheader("References",divider='gray')
         for i, doc in enumerate(retrieved_docs):
+            # doc = doc[0]
             doc_title = doc.get('title','No Title')
             doc_text = "\n".join(doc['contents'].split("\n")[1:])
             expander = st.expander(f"**[{i+1}]: {doc_title}**", expanded=False)
